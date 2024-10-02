@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.animate-img{
+    animation: moveUpDown  1s infinite alternate ease-in;
+    
+}
+.animate-sidebar{
+    animation: slidein 0.3s ease-in   forwards;
+}
+@keyframes slidein {
+    0%{
+        transform: translateX(100%);
+    }
+    100%{
+        transform: translateX(0);
+    }
+}
+
+@keyframes moveUpDown {
+    0%{
+        transform: translateY(0);
+    }
+    100%{
+        transform: translateY(20px);
+    }
+}
+
