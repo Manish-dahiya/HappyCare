@@ -4,7 +4,7 @@ const bcrypt=require("bcrypt")
 const User= require("../models/user.model.js")
 const secret_key=process.env.PRIVATE_KEY
 const joi=require("joi")
-
+const doctors=require("../models/doctor.model.js")
 
 async function signup(req,res){
     const {username,email,password}=req.body
@@ -73,7 +73,11 @@ async function login(req,res){
     res.status(200).json({message:"login successfull ",token:token});
 }
 
+
+
+
 module.exports={
     signup,
-    login
+    login,
+    
 }

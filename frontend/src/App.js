@@ -7,6 +7,8 @@ import Login from './pages/Login.jsx';
 import AuthContextProvider from './contexts/AuthContextProvider.jsx';
 import { useEffect, useState } from 'react';
 import About from './pages/About.jsx';
+import Appiontment from './pages/Appiontment.jsx';
+import DoctorContextProvider from './contexts/DoctorContextProvider.jsx';
 
 function App() {
   const [isLoggedIn,setIsLoggedIn]=useState(localStorage.getItem("token")?true:false); //for the purpose of login/logout button
@@ -22,6 +24,7 @@ function App() {
       {/* <img src={blueCircle} alt="" className='h-96 w-96 absolute top-0  right-0 ' /> */}
     <BrowserRouter>
     <AuthContextProvider>
+      <DoctorContextProvider> {/*for the appointment page*/}
    
     <Navbar setIsLoggedIn={setIsLoggedIn} isLoggedIn={isLoggedIn}/>
 
@@ -29,7 +32,9 @@ function App() {
       <Route path='/' element={<Home/>} ></Route>
       <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn}/>}></Route>
       <Route path="/about" element={<About/>} ></Route>
+      <Route path='/appointment' element={<Appiontment/>}></Route> {/*protected*/}
     </Routes>    
+    </DoctorContextProvider>
     </AuthContextProvider>
   </BrowserRouter>
   </div>

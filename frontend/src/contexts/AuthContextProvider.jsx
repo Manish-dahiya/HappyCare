@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { createContext } from "react";
 import { useNavigate } from 'react-router-dom';
+import { decodeToken } from '../helper';
 // import { decodeToken } from '../helpers/helper';
 
 
@@ -10,6 +11,7 @@ export const authContext = createContext()
 function AuthContextProvider({children}) {
     const navigate = useNavigate()
     const [responseMessage, setResponseMessage] = useState("")
+    const [userId, setUserId] = useState(null)
 
     const loginUser = async (formData,setIsLoggedIn) => {
         try {
@@ -67,6 +69,14 @@ function AuthContextProvider({children}) {
         }
     }
 
+    useEffect(() => {
+        const token = localStorage.getItem("token")
+        const decodedTokenId = decodeToken(token)
+        if (decodedTokenId) {
+            setUserId(decodedTokenId)
+        }
+    }, [localStorage.getItem("token")])
+
 
 
   return (
@@ -74,7 +84,8 @@ function AuthContextProvider({children}) {
         loginUser,
         registerUser,
         responseMessage,
-        setResponseMessage
+        setResponseMessage,
+        userId
     }}>
         {children}
       

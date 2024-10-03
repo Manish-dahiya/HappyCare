@@ -30,7 +30,7 @@ function Navbar({isLoggedIn,setIsLoggedIn}) {
             }
         </div>
 
-        <div className='text-2xl md:hidden' onClick={()=>{setIsSideBar(true)}}>&#9776;</div>
+        <div className='text-2xl  block md:hidden' onClick={()=>{setIsSideBar(true)}}>&#9776;</div>
         {isSideBar && <Sidebar isLoggedIn={isLoggedIn}  setIsSideBar={setIsSideBar}/>}
 
     </div>

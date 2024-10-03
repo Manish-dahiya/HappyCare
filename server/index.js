@@ -13,13 +13,14 @@ const db=require("./dbConfig/dbconfig.js")
 app.use(express.json());
 app.use(express.urlencoded({extended:true}))
 
-
+const path=require("path")
+const staticpath= path.join(__dirname,"public");
+app.use(express.static(staticpath))
 
 
 
 app.use("/user",require("./routes/user.routes.js"))
-
-
+app.use("/admin",require("./routes/admin.routes.js"))
 
 
 
