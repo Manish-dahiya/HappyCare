@@ -8,10 +8,11 @@ async function addDoctor(req,res){
     const avatar= req.file?req.file.filename : null
 
     const joiSchema=joi.object({
-        email:joi.string().email().required()
+        email:joi.string().email().required(),
+        phNumber:joi.string().min(10).required()
     })
 
-    const check=joiSchema.validate({email})
+    const check=joiSchema.validate({email,phNumber})
     if(check.error){
         const message=check.error.details[0].message
         return res.json({message:message})

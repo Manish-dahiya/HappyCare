@@ -37,6 +37,29 @@ async function bookAppointment(req,res){
     return res.status(200).json({message:"appointment request sent successfully",data:newappointment})
 }
 
+
+async function getAllAppointments(req,res){
+    try {
+        const allapps= await appointments.find().populate("doctorId");
+        return res.status(200).json({data:allapps})
+    } catch (error) {
+        return res.status(401).json({message:"error in fetching appointmenst!"})
+    }
+}
+
+async function updateAppointmentStatus(req,res){
+    const {status,id}=req.body;
+
+    try {
+        const response= await appointments.findByIdAndUpdate({_id:id},{request:status},{new:true}) //new --> to get the updated data.
+        return res.status(200).json({message:response});
+    } catch (error) {
+        return res.status(401).json({message:"error in updating the status"})
+    }
+}
+
 module.exports={
-    bookAppointment
+    bookAppointment,
+    getAllAppointments,
+    updateAppointmentStatus
 }

@@ -33,7 +33,7 @@ function App() {
       <Route path='/' element={<Home/>} ></Route>
       <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn}/>}></Route>
       <Route path="/about" element={<About/>} ></Route>
-      <Route path='/appointment' element={<Appiontment/>}></Route> {/*protected*/}
+      <Route path='/appointament' element={<Appiontment/>}></Route> {/*protected*/}
     </Routes>
 
     <Footer/>    
