@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 import About from './pages/About.jsx';
 import Appiontment from './pages/Appiontment.jsx';
 import DoctorContextProvider from './contexts/DoctorContextProvider.jsx';
+import Footer from './components/Footer.jsx';
 
 function App() {
   const [isLoggedIn,setIsLoggedIn]=useState(localStorage.getItem("token")?true:false); //for the purpose of login/logout button
@@ -33,7 +34,9 @@ function App() {
       <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn}/>}></Route>
       <Route path="/about" element={<About/>} ></Route>
       <Route path='/appointment' element={<Appiontment/>}></Route> {/*protected*/}
-    </Routes>    
+    </Routes>
+
+    <Footer/>    
     </DoctorContextProvider>
     </AuthContextProvider>
   </BrowserRouter>
