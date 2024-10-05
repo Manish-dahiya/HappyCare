@@ -1,10 +1,9 @@
 import React, { createContext, useState } from 'react'
-
+import { toast } from 'react-toastify';
 export const doctorContext=createContext()
 
 function DoctorContextProvider({children}) {
     const [allDoctors,setAllDoctors]=useState([])
-    const [errorMessage,setErrorMessage]=useState("");
     const [appointmentInfo, setAppointmentInfo] = useState(() => {   //it handle the page refrsh as well
         // Retrieve appointment from localStorage and parse it
         const savedAppointment = localStorage.getItem("appointment");
@@ -38,16 +37,33 @@ function DoctorContextProvider({children}) {
               
                 localStorage.setItem("appointment", JSON.stringify(data.data));
                 setHasBookedAppointment(true);
-                setErrorMessage(data.message)
+                // setErrorMessage(data.message)
+                toast.success(data.message)
             }
             else {
                 const data=await response.json()
-                setErrorMessage(data.message)
+                toast.error(data.message)
+                
             }
         } catch (error) {
             console.log("error",error)
-           
-            setErrorMessage("some internal error occured .Please try again after some time.")
+            toast.error("some internal error occured")
+        }
+    }
+
+    const cancelUserAppointment=async(appointmentId,setHasBookedAppointment)=>{
+        try {
+           const response= await fetch(`http://localhost:4000/user/cancelAppointment/${appointmentId}`) 
+           if(response.status==200){
+            toast.success("appointment canceled successfully")
+            localStorage.removeItem("appointment")
+            setHasBookedAppointment(false)
+           }
+           else{
+            toast.error("error in canceling appointment")
+           }
+        } catch (error) {
+            toast.error("some internal error occured")
         }
     }
 
@@ -57,8 +73,7 @@ function DoctorContextProvider({children}) {
         fetchAllDoctors,
         allDoctors,
         bookAppointment,
-        errorMessage,
-        setErrorMessage,
+        cancelUserAppointment,
         appointmentInfo
 
     }}>

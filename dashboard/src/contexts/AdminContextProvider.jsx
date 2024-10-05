@@ -1,5 +1,6 @@
 import React, { createContext } from 'react'
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 export const adminContext= createContext()
 function AdminContextProvider({children}) {
@@ -17,22 +18,23 @@ function AdminContextProvider({children}) {
             if(response.status==200){
                 //succesfull login message
                 const data=await response.json()
-                console.log(data.message)
                 localStorage.setItem("adminToken",data.token);
+                toast.success("login successfull")
                 navigate("/home")
             }
             else{
                 //message
                 const data=await response.json()
-                console.log(data.message)
+                toast.error(data.message);
             }
         } catch (error) {
-            console.log("some error occured")
+            toast.error("some internal error occured")
         }
     }
 
     const logoutAdmin=()=>{
        if(localStorage.getItem("adminToken")){
+        toast.success("logout successfully")
         localStorage.removeItem("adminToken");
        }
     }
@@ -47,13 +49,13 @@ function AdminContextProvider({children}) {
                 body:JSON.stringify(formData)
             })
             if(response.status==200){
-                console.log("registered successfully")
+                toast.success("registerd Successfully")
             }
             else{
-                console.log("error in registering")
+                toast.error("error in registering")
             }
         } catch (error) {
-            console.log("error occured")
+           toast.error("some internal error occured")
         }
     }
 

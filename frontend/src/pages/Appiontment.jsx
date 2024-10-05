@@ -2,6 +2,8 @@ import React, { useContext, useEffect, useState } from 'react'
 import appointment from "../public/appointment.png"
 import { doctorContext } from '../contexts/DoctorContextProvider';
 import { authContext } from '../contexts/AuthContextProvider';
+import { toast } from 'react-toastify';
+import { decodeToken } from '../helper';
 function Appiontment() {
     const init={
         firstName:"",
@@ -17,11 +19,12 @@ function Appiontment() {
     }
 
     const {userId}=useContext(authContext)
-    const {fetchAllDoctors,allDoctors,bookAppointment,errorMessage,setErrorMessage,appointmentInfo}=useContext(doctorContext)
+    const {fetchAllDoctors,allDoctors,bookAppointment,appointmentInfo,cancelUserAppointment}=useContext(doctorContext)
     const [depts,setAllDepts]=useState(null)
     const [doctors,setDoctors]=useState(null) //acc to the dept
     const [formData,setFormData]= useState(init);
     const [hasBookedAppointment,setHasBookedAppointment]=useState(localStorage.getItem("appointment")?true:false);
+    const [cancelWarning,setCancelWarning]=useState(false)
     
     const handleChange=(e)=>{
         const {name,value}=e.target
@@ -68,15 +71,32 @@ function Appiontment() {
         bookAppointment(obj,setHasBookedAppointment);
     }
     else{
-        setErrorMessage("fill the fields first");
+       toast.error("fill the fields first")
     }
    }
 
-    useEffect(()=>{
-        setTimeout(() => {
-            setErrorMessage("") 
-        }, 3000);
-    },[errorMessage])
+  const handleCancelAppointment=()=>{
+    setCancelWarning((prev)=>!prev)
+    toast.warning("Are you sure ? Press  confirm ")
+
+  }
+
+  const cancelAppointment=()=>{
+    const appointmentString = localStorage.getItem("appointment");
+    
+    // Check if the appointment exists in localStorage
+    if (appointmentString) {
+        const appointment = JSON.parse(appointmentString);
+        const appointmentId = appointment._id; // Access _id after parsing
+        if (appointmentId) {
+            cancelUserAppointment(appointmentId,setHasBookedAppointment); // Call the cancellation function
+        } else {
+            toast.error("No appointment ID found."); // More specific error message
+        }
+    } else {
+        toast.error("No appointment found."); // User-friendly message
+    }
+  }
 
     return (
         <div className='px-20'>
@@ -145,7 +165,7 @@ function Appiontment() {
             </div>
 
                 <button className='bg-blue-400 px-1 py-2 rounded-lg font-semibold hover:bg-blue-500' onClick={handleAppointment}>Appointment</button>
-                        <p>{errorMessage}</p>
+                       
                         </>:
 
                         <div id='booked-Appointment' className='ms-8 w-full'>
@@ -163,6 +183,17 @@ function Appiontment() {
                         
                         }
                         </div>
+
+                        {
+                            cancelWarning? 
+                                <div className='flex '>
+                                    <button className=' mt-3 ml-5 bg-blue-400 px-2 py-1 rounded-lg' onClick={cancelAppointment}>Confirm </button>
+                                    <button className=' mt-3 ml-5 bg-red-400 px-2 py-1 rounded-lg' onClick={()=>setCancelWarning(false)}>Cancel </button>
+                                </div>
+                            :
+                            <button className=' mt-3 ml-5 bg-red-400 px-2 py-2 rounded-lg font-semibold' onClick={handleCancelAppointment}>Cancel Appointment</button>
+                        }
+                        
             <footer className='text-center py-20'>
                 <h1 className='font-bold text-slate-700'>Designed By Mansih Kumar </h1>
             </footer>

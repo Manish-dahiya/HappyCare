@@ -3,6 +3,7 @@ import { createContext } from "react";
 import { useNavigate } from 'react-router-dom';
 import { decodeToken } from '../helper';
 // import { decodeToken } from '../helpers/helper';
+import { toast } from 'react-toastify';
 
 
 export const authContext = createContext()
@@ -10,7 +11,6 @@ export const authContext = createContext()
 
 function AuthContextProvider({children}) {
     const navigate = useNavigate()
-    const [responseMessage, setResponseMessage] = useState("")
     const [userId, setUserId] = useState(null)
 
     const loginUser = async (formData,setIsLoggedIn) => {
@@ -25,7 +25,8 @@ function AuthContextProvider({children}) {
 
             if (response.status == 200) {
                 const data = await response.json()
-                setResponseMessage(data.message)
+                
+                toast.success(data.message)
 
                 localStorage.setItem("userToken", data.token)
                 setIsLoggedIn(true)
@@ -33,39 +34,37 @@ function AuthContextProvider({children}) {
             }
             else {
                 const data = await response.json()
-                setResponseMessage(data.message)
+                toast.error(data.message)
+                
             }
         } catch (error) {
-            console.log(error)
+            toast.error("some internal error occured");
         }
     }
-
-    const registerUser = async (formData,setIsLoggedIn) => {
+    const registerUser = async (formData, setIsLoggedIn) => {
         try {
-            const response = await fetch("http://localhost:5000/user/signup", {
+            const response = await fetch("http://localhost:4000/user/signup", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({...formData,role:"user"})
-            })
-
-
-            if (response.status == 200) {
-                const data = await response.json()
-                setResponseMessage(data.message)
-
-                localStorage.setItem("userToken", data.token)
-                setIsLoggedIn(true)
-                navigate("/")
-            }
-            else {
-                const data = await response.json()
-                console.log(data)
-                setResponseMessage(data.message)
+                body: JSON.stringify({ ...formData, role: "user" })
+            });
+    
+            const data = await response.json(); // Retrieve data once
+    
+            if (response.status === 200) {
+                toast.success(data.message);
+                localStorage.setItem("userToken", data.token);
+                setIsLoggedIn(true);
+                navigate("/"); // Ensure navigate is correctly used
+            } else {
+                console.log(data);
+                toast.error(data.message); // Display error message from server
             }
         } catch (error) {
-            console.log(error)
+            toast.error("Some internal error occurred."); // Use a generic error message
+            console.error("Error occurred:", error); // Log the actual error for debugging
         }
     }
 
@@ -83,8 +82,7 @@ function AuthContextProvider({children}) {
     <authContext.Provider  value={{
         loginUser,
         registerUser,
-        responseMessage,
-        setResponseMessage,
+
         userId
     }}>
         {children}

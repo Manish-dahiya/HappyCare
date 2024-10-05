@@ -10,6 +10,9 @@ import About from './pages/About.jsx';
 import Appiontment from './pages/Appiontment.jsx';
 import DoctorContextProvider from './contexts/DoctorContextProvider.jsx';
 import Footer from './components/Footer.jsx';
+import { Flip, ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import ProtectedRoutes from './ProtectedRoutes.jsx';
 
 function App() {
   const [isLoggedIn,setIsLoggedIn]=useState(localStorage.getItem("userToken")?true:false); //for the purpose of login/logout button
@@ -33,13 +36,26 @@ function App() {
       <Route path='/' element={<Home/>} ></Route>
       <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn}/>}></Route>
       <Route path="/about" element={<About/>} ></Route>
-      <Route path='/appointament' element={<Appiontment/>}></Route> {/*protected*/}
+      <Route path='/appointment' element={ <ProtectedRoutes><Appiontment/></ProtectedRoutes> }></Route> {/*protected*/}
     </Routes>
 
     <Footer/>    
     </DoctorContextProvider>
     </AuthContextProvider>
   </BrowserRouter>
+  <ToastContainer
+             position="top-center"
+             autoClose={3000}
+             hideProgressBar
+             newestOnTop={false}
+             closeOnClick
+             rtl={false}
+             pauseOnFocusLoss
+             draggable
+             pauseOnHover={false}  // Disable hover to test auto-close
+             theme="light"
+             transition={Flip} 
+      />
   </div>
   );
 }

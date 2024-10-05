@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { authContext } from '../contexts/AuthContextProvider'
-
+import { toast } from 'react-toastify';
 
 function Login({setIsLoggedIn}) {
     const [isRegister, setIsRegister] = useState()
@@ -12,7 +12,7 @@ function Login({setIsLoggedIn}) {
 
   
     const [formData,setFormData]=useState(init)
-    const {loginUser,registerUser,responseMessage,setResponseMessage}=useContext(authContext)
+    const {loginUser,registerUser}=useContext(authContext)
     const handleChange=(e)=>{
         const {name,value}=e.target
         setFormData((prev)=>({
@@ -25,7 +25,7 @@ function Login({setIsLoggedIn}) {
             loginUser({email:formData.email ,password:formData.password},setIsLoggedIn); //setIsLoggedIn for the purpose of updating
         }
         else{
-            setResponseMessage("fill the fields first")
+           toast.error("fill the fields first")
         }
     }
     const handleRegister=()=>{
@@ -33,15 +33,10 @@ function Login({setIsLoggedIn}) {
             registerUser(formData,setIsLoggedIn);
         }
         else {
-            setResponseMessage("fill the fields first")
+            toast.error("fill the fields first")
         }
     }
     
-    useEffect(()=>{
-        setTimeout(()=>{
-            setResponseMessage("");
-        },3000)
-    },[responseMessage])
 
    
     return (
@@ -72,7 +67,6 @@ function Login({setIsLoggedIn}) {
                     :  <button className='bg-blue-500 rounded-lg px-3 py-1 font-bold text-white mt-4 hover:bg-blue-400' onClick={handleRegister}>Register</button>
                 }
 
-                <p className='text-red-400'>{responseMessage}</p>
             </div>
 
         </div>

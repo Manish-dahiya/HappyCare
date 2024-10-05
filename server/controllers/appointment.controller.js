@@ -58,8 +58,19 @@ async function updateAppointmentStatus(req,res){
     }
 }
 
+async function cancelAppointment(req,res){
+    const {id}=req.body
+    try {
+        const response= await appointments.findByIdAndDelete(id);
+        return res.status(200).json({message:'apppointment deleted successfully'})
+    } catch (error) {
+        return res.status(401).json({message:"error in deleting appointment"})
+    }
+}
+
 module.exports={
     bookAppointment,
     getAllAppointments,
-    updateAppointmentStatus
+    updateAppointmentStatus,
+    cancelAppointment
 }

@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { adminContext } from '../contexts/AdminContextProvider'
+import { toast } from 'react-toastify'
 
 function AddAdmin() {
     const init={
@@ -21,10 +22,11 @@ function AddAdmin() {
 
     const handleRegister=()=>{
         if(formData.username.length==0 || formData.email.length==0 || formData.password.length==0){
-            //show message
+          toast.error("fill the fields first")
         }
         else{
             addAdmin(formData);
+            setFormData(init)
         }
     }
 

@@ -1,4 +1,5 @@
 import React, { createContext, useState } from 'react'
+import { toast } from 'react-toastify';
 
 export const doctorContext= createContext()
 
@@ -14,11 +15,10 @@ function DoctorContextProvider({children}) {
                 setAllAppointments(data.data);
             }
             else{
-                //show message
-               console.log("error in fetching all appointments")
+                toast.error("error in fetching appointments") 
             }
         } catch (error) {
-            //show message
+            toast.error("some internal error occured")
         }
     }
 
@@ -34,13 +34,13 @@ function DoctorContextProvider({children}) {
             })
             if(response.status==200){
                 const data=response.json()
-                //set message
+                toast.success("updated appointment status")
             }
             else{
-                console.log("error in updating the status")
+              toast.error("error in updating appointment status")
             }
         } catch (error) {
-                //message
+               
         }
     }
 
@@ -52,10 +52,10 @@ function DoctorContextProvider({children}) {
                 body:formData
             })
             if(response.status==200){
-                //show success message
+                toast.success("doctor added succesfully")
             }
             else{
-                console.log("error in adding doc")
+               toast.error("error in adding doctor")
             }
         } catch (error) {
             //show message
@@ -70,7 +70,7 @@ function DoctorContextProvider({children}) {
                 setAllDoctors(data);
             }
             else{
-                //show message
+                toast.error("error in fetching doctors info.")
             }
         } catch (error) {
             //show message.

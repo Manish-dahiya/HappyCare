@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react'
 import docSkeleton from "../public/docSkeleton.jpg"
 import { doctorContext } from '../contexts/DoctorContextProvider';
+import { toast } from 'react-toastify';
 function AddDoctor() {
     const init = {
         name: "",
@@ -50,7 +51,7 @@ function AddDoctor() {
             || formData.gender.length == 0 || formData.avatar.length == 0
         ) {
             //show error message
-            console.log("fill fields first")
+           toast.error("fill the fields first")
         }
         else {
             const formDataObj = new FormData();
@@ -61,9 +62,8 @@ function AddDoctor() {
             formDataObj.append("gender", formData.gender)
             formDataObj.append("avatar", formData.avatar)
             addDoctor(formDataObj)
+            setFormData(init)
         }
-
-        console.log(formData)
 
     }
 
