@@ -20,14 +20,14 @@ function AuthContextProvider({children}) {
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify(formData)
+                body: JSON.stringify({...formData,role:"user"})
             })
 
             if (response.status == 200) {
                 const data = await response.json()
                 setResponseMessage(data.message)
 
-                localStorage.setItem("token", data.token)
+                localStorage.setItem("userToken", data.token)
                 setIsLoggedIn(true)
                 navigate("/")
             }
@@ -47,7 +47,7 @@ function AuthContextProvider({children}) {
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify(formData)
+                body: JSON.stringify({...formData,role:"user"})
             })
 
 
@@ -55,7 +55,7 @@ function AuthContextProvider({children}) {
                 const data = await response.json()
                 setResponseMessage(data.message)
 
-                localStorage.setItem("token", data.token)
+                localStorage.setItem("userToken", data.token)
                 setIsLoggedIn(true)
                 navigate("/")
             }
@@ -70,12 +70,12 @@ function AuthContextProvider({children}) {
     }
 
     useEffect(() => {
-        const token = localStorage.getItem("token")
+        const token = localStorage.getItem("userToken")
         const decodedTokenId = decodeToken(token)
         if (decodedTokenId) {
             setUserId(decodedTokenId)
         }
-    }, [localStorage.getItem("token")])
+    }, [localStorage.getItem("userToken")])
 
 
 

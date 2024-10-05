@@ -14,7 +14,7 @@ function Doctors() {
 
   return (
     <div className=' #e5e5e5 h-full w-full bg-[#e5e5e5] rounded-l-3xl p-10 text-center'>
-        <h1>Our Doctors</h1>
+        <h1 className='font-semibold text-3xl mb-3 text-[#3942d8]'>Our Doctors</h1>
         <div className='flex flex-wrap justify-center items-center gap-6 w-full'>
             {
                 allDoctors?.map((item,index)=>(

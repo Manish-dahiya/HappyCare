@@ -71,8 +71,8 @@ function AddDoctor() {
 
     return (
         <div className='  #e5e5e5 h-full w-full bg-[#e5e5e5] rounded-l-3xl p-10 text-center'>
-            <h1 className='text-3xl font-bold'>HappyCare +++</h1>
-            <h2 className='mt-7 font-semibold'>Register a new Doctor </h2>
+            <h1 className='text-3xl font-bold text-red-500'>Happy<span className='text-[#3942d8]'>Care</span> +++</h1>
+            <h2 className='mt-7 font-semibold text-2xl'>Register a new Doctor </h2>
 
             <div className='flex flex-col md:flex-row mt-10 gap-2'>
                 <div className='flex flex-col'>

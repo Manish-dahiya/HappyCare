@@ -12,12 +12,12 @@ import DoctorContextProvider from './contexts/DoctorContextProvider.jsx';
 import Footer from './components/Footer.jsx';
 
 function App() {
-  const [isLoggedIn,setIsLoggedIn]=useState(localStorage.getItem("token")?true:false); //for the purpose of login/logout button
+  const [isLoggedIn,setIsLoggedIn]=useState(localStorage.getItem("userToken")?true:false); //for the purpose of login/logout button
   useEffect(()=>{
-    if(localStorage.getItem("token")){
+    if(localStorage.getItem("userToken")){
       setIsLoggedIn(true)
     }
-  },[localStorage.getItem("token")]) //if the user deletes the token
+  },[localStorage.getItem("userToken")]) //if the user deletes the token
 
 
   return (

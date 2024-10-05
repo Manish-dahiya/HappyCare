@@ -4,6 +4,7 @@ const path=require("path")
 
 const {addDoctor,getAllDoctors}=require("../controllers/doctor.controller")
 const {getAllAppointments,updateAppointmentStatus}=require("../controllers/appointment.controller")
+const {login,signup,verifyToken}=require("../controllers/user.controller")
 const multer=require("multer")
 const filepath= path.join(__dirname,"../public/docImages")
 const diskStorage= multer.diskStorage({
@@ -22,6 +23,9 @@ router.use("/getAllDoctors",getAllDoctors)
 router.use("/getAllAppointments",getAllAppointments)
 router.use("/updateAppointmentStatus",updateAppointmentStatus)
 router.use("/getAllDoctors",getAllDoctors)
+router.use("/login",login)
+router.use("/signup",signup)
+router.use("/verifyToken",verifyToken)
 
 
 module.exports=router
