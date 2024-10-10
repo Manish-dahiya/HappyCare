@@ -4,6 +4,7 @@ import { doctorContext } from '../contexts/DoctorContextProvider';
 import { authContext } from '../contexts/AuthContextProvider';
 import { toast } from 'react-toastify';
 import { decodeToken } from '../helper';
+import { Link } from 'react-router-dom';
 function Appiontment() {
     const init={
         firstName:"",
@@ -191,8 +192,12 @@ function Appiontment() {
                                     <button className=' mt-3 ml-5 bg-red-400 px-2 py-1 rounded-lg' onClick={()=>setCancelWarning(false)}>Cancel </button>
                                 </div>
                             :
-                            <button className=' mt-3 ml-5 bg-red-400 px-2 py-2 rounded-lg font-semibold' onClick={handleCancelAppointment}>Cancel Appointment</button>
+                            <button className=' mt-3  bg-red-400 px-2 py-2 rounded-lg font-semibold' onClick={handleCancelAppointment}>Cancel Appointment</button>
                         }
+                        
+                    <div className='mt-10'>
+                        <Link to="/payment" className=' bg-blue-400 px-6 hover:bg-blue-500 py-1 rounded-lg '>Pay</Link>
+                    </div>
                         
             <footer className='text-center py-20'>
                 <h1 className='font-bold text-slate-700'>Designed By Mansih Kumar </h1>

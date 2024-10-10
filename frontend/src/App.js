@@ -13,6 +13,7 @@ import Footer from './components/Footer.jsx';
 import { Flip, ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ProtectedRoutes from './ProtectedRoutes.jsx';
+import Payment from './pages/Payment.jsx';
 
 function App() {
   const [isLoggedIn,setIsLoggedIn]=useState(localStorage.getItem("userToken")?true:false); //for the purpose of login/logout button
@@ -37,6 +38,7 @@ function App() {
       <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn}/>}></Route>
       <Route path="/about" element={<About/>} ></Route>
       <Route path='/appointment' element={ <ProtectedRoutes><Appiontment/></ProtectedRoutes> }></Route> {/*protected*/}
+      <Route path='/payment' element={ <ProtectedRoutes><Payment/></ProtectedRoutes> }></Route> {/*protected*/}
     </Routes>
 
     <Footer/>    
