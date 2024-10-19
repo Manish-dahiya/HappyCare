@@ -2,7 +2,7 @@ SIMPLE HOSPITAL MANAGMENT APP WITH MERN STACK.
 
 DEMO OF USER SIDE 
 
-https://github.com/user-attachments/assets/36166ca0-a3bb-4ec9-9240-d8dd8c2b1840
+https://github.com/user-attachments/assets/277df087-35ba-4240-9bc4-6facb1d49edd
 
 DEMO OF ADMIN 
 
